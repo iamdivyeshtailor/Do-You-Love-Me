@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Do You Love Me?</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 100vh;
+      margin: 0;
+      background: linear-gradient(to bottom, #ffdde1, #ffe4f3);
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      overflow: hidden;
+      transition: all 0.5s ease;
+    }
+
+    h1 {
+      font-size: 36px;
+      color: #ff4081;
+      margin-bottom: 20px;
+      animation: bounce 2s infinite;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 20px;
+    }
+
+    button {
+      padding: 12px 30px;
+      font-size: 18px;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    button.yes {
+      background-color: #ff4081;
+      color: white;
+      box-shadow: 0 4px 15px rgba(255, 64, 129, 0.5);
+    }
+
+    button.yes:hover {
+      background-color: #ff5c99;
+      transform: scale(1.1);
+    }
+
+    button.no {
+      background-color: #ffe4f3;
+      color: #ff4081;
+      box-shadow: 0 4px 15px rgba(255, 228, 243, 0.8);
+    }
+
+    button.no:hover {
+      transform: scale(1.1);
+    }
+
+    .popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      text-align: center;
+      width: 300px;
+      height: 300px;
+      background-color: pink;
+      border-radius: 50%;
+      box-shadow: 0 0 20px rgba(255, 64, 129, 0.5);
+      animation: popupAnimation 1s forwards;
+    }
+
+    .popup h2 {
+      color: #ff4081;
+      margin-top: 100px;
+      font-size: 24px;
+    }
+
+    .popup .heart {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 50px;
+      color: red;
+    }
+
+    .emoji {
+      position: absolute;
+      font-size: 30px;
+      animation: floatUp 3s ease-in-out forwards;
+    }
+
+    .candle {
+      position: absolute;
+      bottom: 0;
+      width: 50px;
+      height: 120px;
+      background-color: #f3c8c8;
+      border-radius: 25px;
+      box-shadow: 0 0 15px rgba(255, 100, 100, 0.5);
+      animation: flicker 1.5s infinite alternate;
+    }
+
+    .candle::before {
+      content: '';
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      width: 10px;
+      height: 30px;
+      background-color: #ff4500;
+      border-radius: 50%;
+      transform: translateX(-50%);
+      box-shadow: 0 0 15px rgba(255, 69, 0, 0.5);
+    }
+
+    @keyframes bounce {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    @keyframes floatUp {
+      0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-150px) scale(1.5);
+      }
+    }
+
+    @keyframes popupAnimation {
+      0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0;
+      }
+      100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+      }
+    }
+
+    @keyframes flicker {
+      0% {
+        opacity: 0.8;
+        transform: scale(1);
+      }
+      100% {
+        opacity: 0.4;
+        transform: scale(1.1);
+      }
+    }
+
+    .dark-mode {
+      background: #2c3e50;
+      color: #ecf0f1;
+    }
+
+    .dark-mode h1, .dark-mode h2 {
+      color: #ecf0f1;
+    }
+
+    .dark-mode button.yes {
+      background-color: #e74c3c;
+    }
+
+    .dark-mode button.no {
+      background-color: #34495e;
+    }
+  </style>
+</head>
+<body>
+  <h1>DO YOU LOVE ME?</h1>
+  <div class="buttons">
+    <button class="yes" onclick="showHeartAndEmojis()">Yes</button>
+    <button class="no" onclick="alert('Oh no! 😢')">No</button>
+  </div>
+
+  <!-- Popup container -->
+  <div class="popup" id="popup" style="display: none;">
+    <h2>I LOVE YOU TOO! ❤️</h2>
+    <div class="heart">❤️</div>
+  </div>
+
+  <script>
+    function showHeartAndEmojis() {
+      const popup = document.getElementById('popup');
+      popup.style.display = 'block'; // Display the popup
+      document.body.classList.add('dark-mode'); // Activate dark mode and romantic ambiance
+
+      // Trigger floating emoji animation
+      const emojis = ['🤗', '😘', '💋', '❤️', '💕'];
+      for (let i = 0; i < 20; i++) {
+        // Create emoji element
+        const emoji = document.createElement('div');
+        emoji.classList.add('emoji');
+        emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+
+        // Set random position
+        emoji.style.left = Math.random() * window.innerWidth + 'px';
+        emoji.style.top = Math.random() * window.innerHeight + 'px';
+
+        // Append to body
+        document.body.appendChild(emoji);
+
+        // Remove after animation
+        setTimeout(() => emoji.remove(), 3000);
+      }
+
+      // Add candles to the screen
+      for (let i = 0; i < 3; i++) {
+        const candle = document.createElement('div');
+        candle.classList.add('candle');
+        candle.style.left = `${Math.random() * window.innerWidth}px`; 
+        document.body.appendChild(candle);
+      }
+    }
+  </script>
+</body>
+</html>
